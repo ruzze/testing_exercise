@@ -6,15 +6,16 @@
         public string ProductName { get; set; } 
         public DateTime ExpiryDate { get; set; }
         public string EANCode { get; set; }
+        public Price Price { get; set; }
 
-        public Product(int id, string name, DateTime expiry, string eancode)
+        public Product(int id, string name, DateTime expiry, string eancode, Price price)
         { 
             ArgumentNullException.ThrowIfNull(id, nameof(id));
             ArgumentNullException.ThrowIfNull(name, nameof(name));
             ArgumentNullException.ThrowIfNull(expiry, nameof(expiry));
             ArgumentNullException.ThrowIfNull(eancode, nameof(eancode));
 
-            if (expiry < DateTime.Now)
+            if (expiry.Date < DateTime.Now.Date)
             {
                 throw new ArgumentOutOfRangeException(nameof(expiry));
             }
@@ -25,6 +26,12 @@
             ProductName = name;
             ExpiryDate = expiry;
             EANCode = eancode;
+            Price = price;
+        }
+
+        public bool IsExpired()
+        { 
+            return ExpiryDate.Date <= DateTime.Now.Date;
         }
     }
 }
