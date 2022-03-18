@@ -10,24 +10,30 @@ namespace Shop.Business
     {
         public float value { get; set; }
         public DateRange dateRange { get; set; }
-
-        public Price(float price, DateRange range)
+        public Discount? discount { get; set; }
+        public Price(float price, DateRange range, Discount discount)
         { 
             ArgumentNullException.ThrowIfNull(price, nameof(price));
             ArgumentNullException.ThrowIfNull(range, nameof(range));
+            ArgumentNullException.ThrowIfNull(discount, nameof(discount));
+
             if (price < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(price));
             }
 
-
             value = price;
             dateRange = range;
+            this.discount = discount;
         }
     }
 
     public class Discount
     {
+        public const int minValue = 5;
+        public const int maxValue = 50;
+        public const int step = 5;
+
         public int value { get; set; }
         public DateRange dateRange { get; set; }
 
@@ -36,7 +42,7 @@ namespace Shop.Business
             ArgumentNullException.ThrowIfNull(value, nameof(value));
             ArgumentNullException.ThrowIfNull(range, nameof(range));
 
-            if (value < 5 || value > 50 || value % 5 != 0)
+            if (value < minValue || value > maxValue || value % step != 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(value));
             }
