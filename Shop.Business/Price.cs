@@ -50,8 +50,7 @@ namespace Shop.Business
         public DateRange dateRange { get; set; }
 
         public Discount(int value, DateRange range)
-        {
-            ArgumentNullException.ThrowIfNull(value, nameof(value));
+        {            
             ArgumentNullException.ThrowIfNull(range, nameof(range));
 
             if (value < minValue || value > maxValue || value % step != 0)
@@ -75,10 +74,8 @@ namespace Shop.Business
         public DateTime to { get; set; }
 
         public DateRange(DateTime fromDate, DateTime toDate)
-        {
-            ArgumentNullException.ThrowIfNull(fromDate, nameof(fromDate));
-            ArgumentNullException.ThrowIfNull(toDate, nameof(toDate));
-            if (fromDate.Date > toDate.Date)
+        {            
+            if (fromDate.Date.CompareTo(toDate.Date) > 0 )
             {
                 throw new ArithmeticException(nameof(fromDate) + nameof(toDate));
             }

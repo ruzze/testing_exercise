@@ -12,8 +12,13 @@
         { 
             ArgumentNullException.ThrowIfNull(id, nameof(id));
             ArgumentNullException.ThrowIfNull(name, nameof(name));
+            if (name.Trim() == String.Empty)
+            {
+                throw new ArgumentException();
+            }
             ArgumentNullException.ThrowIfNull(expiry, nameof(expiry));
             ArgumentNullException.ThrowIfNull(eancode, nameof(eancode));
+            ArgumentNullException.ThrowIfNull(price, nameof(price));
 
             if (expiry.Date < DateTime.Now.Date)
             {
