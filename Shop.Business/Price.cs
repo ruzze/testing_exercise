@@ -11,11 +11,11 @@ namespace Shop.Business
         public float value { get; set; }
         public DateRange dateRange { get; set; }
         public Discount? discount { get; set; }
-        public Price(float price, DateRange range, Discount discount)
+
+        public Price(float price, DateRange range, Discount? discount)
         { 
             ArgumentNullException.ThrowIfNull(price, nameof(price));
-            ArgumentNullException.ThrowIfNull(range, nameof(range));
-            ArgumentNullException.ThrowIfNull(discount, nameof(discount));
+            ArgumentNullException.ThrowIfNull(range, nameof(range));            
 
             if (price < 0)
             {
@@ -25,6 +25,18 @@ namespace Shop.Business
             value = price;
             dateRange = range;
             this.discount = discount;
+        }
+
+        public float GetDiscountedPrice()
+        {
+            if (discount != null)
+            {
+                return value * (1.0f - (discount.value / 100.0f));
+            }
+            else
+            {
+                return value;
+            }
         }
     }
 
